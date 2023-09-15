@@ -1,0 +1,40 @@
+clear all, close all;
+
+nombre_archivo = 'C:\Users\JeruE\Desktop\lab2_sistel\noche.jpeg'; % Ruta de la imagen
+imagen_rgb = imread(nombre_archivo); % Cargar la imagen RGB
+
+umbral=128;
+
+% Extraer los canales de color rojo, verde y azul
+canal_rojo = imagen_rgb(:,:,1);
+canal_verde = imagen_rgb(:,:,2);
+canal_azul = imagen_rgb(:,:,3);
+[filas0,columnas0]=size(canal_rojo);
+
+vector_rojo = reshape(canal_rojo, 1, []);
+vector_verde = reshape(canal_verde, 1, []);
+vector_azul = reshape(canal_azul, 1, []);
+
+vector_r = vector_rojo > umbral;
+vector_v = vector_verde > umbral;
+vector_a = vector_azul >umbral;
+[filas,columnas]=size(vector_r);
+
+vectorCompleto = horzcat(vector_r, vector_v,vector_a);
+
+
+%procedemos a comprobar la imagen
+vector_rojo_rx = vectorCompleto(1:1:columnas);
+vector_verde_rx = vectorCompleto(columnas+1:1:2*columnas);
+vector_azul_rx = vectorCompleto(2*columnas+1:1:end);
+
+vector_rojo_rx_reshape = reshape(vector_rojo_rx, filas0, columnas0);
+vector_verde_rx_reshape = reshape(vector_verde_rx, filas0, columnas0);
+vector_azul_rx_reshape = reshape(vector_azul_rx,  filas0, columnas0);
+
+
+imagen_rx=cat(3,vector_rojo_rx_reshape,vector_verde_rx_reshape,vector_azul_rx_reshape);
+imagen_rx_256 = imagen_rx * 256;
+disp(imagen_rx_256)
+imshow(imagen_rx_256);
+
