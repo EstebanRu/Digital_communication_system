@@ -1,0 +1,25 @@
+t=(0:0.01:10);
+signal = sin(2*pi*t);
+
+M = 16;
+parte_real = [1,-1,1,10];
+parte_imaginaria = [1,-1,1,5];
+
+Es = sum(parte_real.^2 + parte_imaginaria.^2)/M;
+% Eb=Es/(log2(M));
+EbN0=20;
+ebno = 10^((EbN0)/10);
+sigma = sqrt(Es/(2*log2(M)*ebno));
+
+
+z = sigma.*randn(1,length(t));
+figure();
+stem(z);
+
+signal_p= signal + z;
+
+figure()
+subplot(2,1,1);
+plot(t,signal),title('señal');
+subplot(2,1,2);
+plot(t,signal_p),title('señal con ruido');
