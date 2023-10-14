@@ -136,7 +136,9 @@ y1_real=sqrt(2)*Y1.*cos(2*pi*fc.*t);
 
 y_real=sqrt(2)*Y.*cos(2*pi*fc.*tp2);
 y_imag=-sqrt(2)*Y.*sin(2*pi*fc.*tp2);
-figure,plot(tp2,y_real),title('recepcion multiplicada por cos 2 pi fc tp2')
+figure
+subplot(211),plot(tp2,y_real),title('multitrayecto recepcion multiplicada por cos 2 pi fc tp2')
+subplot(212),plot(t,y1_real),title('sin multitrayecto recepcion multiplicada por cos 2 pi fc tp2')
 
 %Filtra la senal resultante con el filto p(-t)
 y1_prima_real=filter(h,1,y1_real);
