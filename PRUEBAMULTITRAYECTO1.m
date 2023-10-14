@@ -109,7 +109,7 @@ rk=downsample(r,S);
  subplot(2, 1, 2),stem(imag(rk),'.b'),title('respuesta al impulso del canal img')
 
 XM=conv(X,rk);
-tp2=[0:length(XM)-1];
+tp2=[0:length(XM)-1]/fs;
  figure()
  subplot(211), plot(t,X,'m'),grid,title('señal X')
  subplot(212), plot(tp2,XM,'r'),grid,title('convolucion por respuesta al impulso')
@@ -133,6 +133,8 @@ Y=XM; %Senal recibida despues del canal AWGN
 Y1=X;
 y1_real=sqrt(2)*Y1.*cos(2*pi*fc.*t);
 
+disp(length(t))
+disp(length(tp2))
 
 y_real=sqrt(2)*Y.*cos(2*pi*fc.*tp2);
 y_imag=-sqrt(2)*Y.*sin(2*pi*fc.*tp2);
@@ -142,7 +144,6 @@ subplot(212),plot(t,y1_real),title('sin multitrayecto recepcion multiplicada por
 
 %Filtra la senal resultante con el filto p(-t)
 y1_prima_real=filter(h,1,y1_real);
-
 
 
 y_prima_real=filter(h,1,y_real);
