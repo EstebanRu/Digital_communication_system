@@ -206,6 +206,20 @@ bits_bin=dec2bin(demap);
 bits_matrix=reshape(bits_bin.', 1, []);
 bits_demap_transpose=str2num(bits_matrix.');
 
+bits_demap=transpose(bits_demap_transpose);
+
+
+if ceros_final~= 0
+    posicion_ceros = length(bits_demap);
+    posicion_eliminar = max(1, posicion_ceros-ceros_final);
+    % Trunca el vector hasta la posición de eliminación
+    vector_sin_ultimos_ceros = bits_demap(1:posicion_eliminar);
+    secuencia_binaria_recibida=vector_sin_ultimos_ceros;
+else
+    secuencia_binaria_recibida=bits_demap;
+end
+
+
 figure();
 scatter(real(simbolos_recibidosZF), imag(simbolos_recibidosZF), 'filled');
 title(['Diagrama de Constelación Despues del ecualizador ',num2str(M), ' -QAM']);
@@ -221,9 +235,9 @@ disp('BER:')
 disp(BER)
 
 %% recuperamos la imagen
-vector_rojo_rx = bits_demap_transpose(1:columnas);
-vector_verde_rx = bits_demap_transpose(columnas+1:2*columnas);
-vector_azul_rx = bits_demap_transpose(2*columnas+1:end);
+vector_rojo_rx = secuencia_binaria_recibida(1:columnas);
+vector_verde_rx = secuencia_binaria_recibida(columnas+1:2*columnas);
+vector_azul_rx = secuencia_binaria_recibida(2*columnas+1:end);
 
 vector_rojo_rx_reshape = reshape(vector_rojo_rx, filas0, columnas0);
 vector_verde_rx_reshape = reshape(vector_verde_rx, filas0, columnas0);
